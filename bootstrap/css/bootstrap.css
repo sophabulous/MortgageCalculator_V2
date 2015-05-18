@@ -6601,6 +6601,7 @@ button.close {
     color: #fff;
     background-color: #666;
     border-color: #777777;
+    align-items: center;
 }
 
 /* active tab color */

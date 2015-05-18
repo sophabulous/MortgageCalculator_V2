@@ -5,26 +5,29 @@
 
     <link rel="stylesheet" href="bootstrap/css/bootstrap.css" media="all" />
     <link rel="stylesheet" href="style.css" type="text/css">
-<!--    <link rel="stylesheet" href="extra.css" type="text/css">-->
-<!--
+    <link rel="stylesheet" href="http://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1/jquery-ui.min.js"></script>
+    <script src="bootstrap/js/chart.js"></script>
+    <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+    <script src="http://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+    <script src="bootstrap/js/bootstrap.min.js"></script>
     <script>
       $(function() {
-        $( "#slider" ).slider({
+        $( ".slider" ).slider({
+            animate: true,
+
           range: "max",
           min: 1,
           max: 1000000000,
           value: 2,
           slide: function( event, ui ) {
-            $( "#amount" ).val( ui.value );
+            $( "#inputMortgageAmount" ).val( ui.value );
           }
         });
-        $( "#amount" ).val( $( "#slider" ).slider( "value" ) );
+        $( "#inputMortgageAmount" ).val( $( ".slider" ).slider( "value" ) );
       });
     </script>
--->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-    <script src="bootstrap/js/chart.js"></script>
-    <script src="bootstrap/js/bootstrap.min.js"></script>
     <script type="text/javascript">
         $(document).ready(function(){ 
             $("#myTab a").click(function(e){
@@ -54,21 +57,24 @@
 
 <body class="container">
     <div class="row">
-        <div class="toolLeftCol">
+        <div class="leftPane col-sm-4 ">
             <h2>Mortgage Information</h2>
             <div class="form-row">
                 <div class="leftCol">
-                    <label for="" class="brlabel">Mortgage Amount</label>
+                    <label class="inputLabel" for="amount" >Mortgage Amount</label>
                 </div>
                 <div class="rightCol">
-                    <input type="number" autocomplete="off" name="inputMPMortgageAmount" id="inputMPMortgageAmount" class="brinput">
+                    <input type="number" id="inputMortgageAmount" class="brinput">
                 </div>
+                <div class="slider"></div>
+                <span class="chartLegend">$0</span>
+                <span class="chartLegend xAxis">$1,000,000</span>
             </div>
             
             <div class="form-row">
                 <div class="leftCol">
-                    <label for="" class="brlabel">Term and Type</label>
-                    <a class="popover-link" rel='popover' data-placement='right' data-original-title='&lt;b&gt;Mortgage Term&lt;/b&gt;' data-content='&lt;p&gt;The period of time your mortgage agreement with the lender is in effect. A mortgage term is usually between 6 months and 5 years long.&lt;/p&gt;&lt;p&gt;Not to be confused with the amortization period. For example, a mortgage could have a term of 5 years and an amortization period of 25 years.&lt;/p&gt;'><input type="button" value="" title="Help" name="helpMPTermAndType" id="helpMPTermAndType" class="brhelp"></a>
+                    <label class="inputLabel" for="" >Term and Type</label>
+                    <a class="popover-link" rel='popover' data-placement='right' data-original-title='&lt;b&gt;Mortgage Term&lt;/b&gt;' data-content='&lt;p&gt;The period of time your mortgage agreement with the lender is in effect. A mortgage term is usually between 6 months and 5 years long.&lt;/p&gt;&lt;p&gt;Not to be confused with the amortization period. For example, a mortgage could have a term of 5 years and an amortization period of 25 years.&lt;/p&gt;'><input type="button" value="" title="Help" name="helpMPTermAndType" id="helpMPTermAndType" class="helpButton"></a>
                 </div>
                 <div class="rightCol">
                     <span>
@@ -89,21 +95,20 @@
             <div class="form-row">
                 <div class="leftCol">
                     <div class="form-row">
-                        <label for="" class="brlabel">Interest Rate</label>
-                        <br /><a href="/ca/rates/index.html">Check Rates</a>
+                        <label class="inputLabel" for="" >Interest Rate</label>
+                        <br /><a href="#">Check Rates</a>
                     </div>
                 </div>
                 <div class="rightCol">
                     <span >
-                         
-                        <input type="number" autocomplete="off" name="inputMPInterestRate" id="inputMPInterestRate" class="brinput">
+                        <input type="number" autocomplete="off" name="" id="" class="brinput">
                     </span>
                 </div>
             </div>
             <div class="form-row">
                 <div class="leftCol">
-                    <label for="" class="brlabel">Amortization</label>                    
-                    <a class="popover-link" rel='popover' data-placement='right' data-original-title='&lt;b&gt;Mortgage Amortization&lt;/b&gt;' data-content='&lt;p&gt;The period of time it will take to pay off the principal amount of a mortgage. This should not be confused with the term of the mortgage, which is usually shorter. The maximum amortization period for an insured mortgage is 25 years, and the maximum amortization for an uninsured mortgage can be as long as 30 years.&lt;/p&gt;'><input type="button" value="" title="Help" name="helpMPTermAndType" id="helpMPTermAndType" class="brhelp"></a>
+                    <label class="inputLabel" for="" >Amortization</label>                    
+                    <a class="popover-link" rel='popover' data-placement='right' data-original-title='&lt;b&gt;Mortgage Amortization&lt;/b&gt;' data-content='&lt;p&gt;The period of time it will take to pay off the principal amount of a mortgage. This should not be confused with the term of the mortgage, which is usually shorter. The maximum amortization period for an insured mortgage is 25 years, and the maximum amortization for an uninsured mortgage can be as long as 30 years.&lt;/p&gt;'><input type="button" value="" title="Help" name="helpMPTermAndType" id="helpMPTermAndType" class="helpButton"></a>
                 </div>
                 <div class="rightCol">
                     <span>
@@ -121,7 +126,7 @@
             </div>
             <div class="form-row">
                 <div class="leftCol">
-                    <label for="" class="brlabel">Payment Frequency</label>
+                    <label class="inputLabel" for="" >Payment Frequency</label>
                 </div>
                 <div class="rightCol">
                     <span>
@@ -144,7 +149,7 @@
 
             <div class="form-row">
                 <div class="leftCol">
-                    <label for="" class="brlabel">One-Time Prepayment</label>
+                    <label class="inputLabel" for="" >One-Time Prepayment</label>
                 </div>
                 <div class="rightCol">
                     <span>
@@ -155,7 +160,7 @@
             </div>
             <div class="form-row">
                 <div class="leftCol">
-                    <label for="" class="brlabel">Annual Prepayment</label>
+                    <label class="inputLabel" for="" >Annual Prepayment</label>
                 </div>
                 <div class="rightCol">
                     <span>
@@ -166,7 +171,7 @@
             </div>
             <div class="form-row">
                 <div class="leftCol">
-                    <label for="" class="brlabel">Increase Payment By</label>
+                    <label class="inputLabel" for="" >Increase Payment By</label>
                 </div>
                 <div class="rightCol">
                     <span>
@@ -177,10 +182,10 @@
             </div>
         </div>
         
-        <div class="toolRightCol">
-            <div class="toolResults">
-                <div class="toolResultsHeader">
-                    <h2 id="resultHeader">Your <span id="resultsHeaderFrequency"></span> mortgage payment <br>is <span id="resultsHeaderPayment"></span>.</h2>
+        <div class="rightPane col-sm-8 ">
+            <div>
+                <div id="resultsHeader">
+                    <h2>Your <span></span> mortgage payment <br> is <span id="resultsHeaderPayment"></span>.</h2>
                 </div>
                 <div class="">
                     <ul class="nav nav-tabs" id="myTab">
@@ -190,14 +195,14 @@
 
                     <div class="tab-content">
                         <div id="sectionA" class="tab-pane fade in active">
-                            <div id="payment-tabpanel" class="brtabpanel" role="tabpanel" aria-labeledby="payment-tab" aria-hidden="false">
+                            <div>
                                 <h3>Amortization Schedule</h3>
                                 <div>
-                                    <div id="yAxisTitle">
+                                    <div class="chartLegend">
                                         Mortgage<br>Amount
                                     </div>
 
-                                    <canvas id="canvas" height="450" width="600"></canvas>
+                                    <canvas id="canvas" ></canvas>
                                     <script>
                                         var randomScalingFactor = function(){ return Math.round(Math.random()*100)};
 
@@ -231,65 +236,68 @@
                                     </script>
                                 </div>
                                 <div>
-                                    <div id="chartLegendRow">
-                                        <span id="xAxisTitle">Amortization in Years</span>
-                                        <span class="chartLegend"><span id="chartLegendMonthlyIcon"></span><span id="chartLegendMonthly">Monthly</span></span>
-                                        <span class="chartLegend"><span id="chartLegendExtraIcon"> </span><span id="chartLegendExtra"> Extra</span></span>
-                                    </div>
+                                    <span class="chartLegend xAxis">Amortization in Years</span>
+                                    <span class="chartLegend"><span id="chartLegendMonthlyIcon"></span><span id="chartLegendMonthly">Monthly</span></span>
+                                    <span class="chartLegend"><span id="chartLegendExtraIcon"> </span><span id="chartLegendExtra"> Extra</span></span>
                                 </div>
                                 <p id="saveMessage">
                                     See how much you can save by making extra payments
                                 </p>
                                 <p id="extraMessage">Your extra payments saved you <span id="resultsExtraSavedAmount"></span> off your mortgage and <span id="resultsExtraSavedYears"></span> years off your amortization.
 					            </p>
-                                <div id="brPaymentFrequency">
+                                <div class="chartLink">
                                     <a href="javascript:void(0);">View the Payment Frequency Table</a>
                                 </div>
                             </div>
 
                         </div>
                         <div id="sectionB" class="tab-pane fade">
-                            <div id="summary-tabpanel" class="brtabpanel displayNone" role="tabpanel" aria-labeledby="summary-tab" aria-hidden="true">
-                                <div id="summaryTable" class="brTable" role="grid" aria-label="This table shows you a summary of your mortgage term">
-                                    <div class="brTableRow brTableHeader" role="row">
-                                        <div class="brTableCell" role="columnheader">Payment and Term Details</div>
-                                        <div class="brTableCell" role="columnheader">Results Summary</div>
-                                    </div>
-                                    <div class="brTableRow" role="row">
-                                        <div class="brTableCell" role="gridcell">Principal Paid for Term</div>
-                                        <div class="brTableCell" id="summaryTablePrincipal" role="gridcell"> </div>
-                                    </div>
-                                    <div class="brTableRow" role="row">
-                                        <div class="brTableCell" role="gridcell">Interest Paid for Term</div>
-                                        <div class="brTableCell" id="summaryTableInterest" role="gridcell"> </div>
-                                    </div>
-                                    <div class="brTableRow" role="row">
-                                        <div class="brTableCell" role="gridcell">Principal and Interest Paid for Term</div>
-                                        <div class="brTableCell" id="summaryTablePrincipalAndInterest" role="gridcell"> </div>
-                                    </div>
-                                    <div class="brTableRow" role="row">
-                                        <div class="brTableCell" role="gridcell">Balance at the End of Term</div>
-                                        <div class="brTableCell" id="summaryTableBalance" role="gridcell"> </div>
-                                    </div>
-                                </div>
+                            <div id="tableBlock">
+                                <table class="table table-bordered table-responsive resultTable">
+                                    <thead>
+                                        <tr>
+                                            <th>Payment and Term Details</th>
+                                            <th>Results Summary</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>Principal Paid for Term</td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Interest Paid for Term</td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Principal and Interest Paid for Term</td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Balance at the End of Term</td>
+                                            <td></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                         
-                        <div class="toolResultsBody">
-                            <div id="resultsGetStartedRow">
-                                <a href="/ca/apply/mortgages/mortgage-index.html?requestType=preapproval&int_id=MPCTool_003_D_E" class="primaryButton">Get Pre-Approved</a>
+                        <div>
+                            <div class="chartRow">
+                                <a href="#" class="primaryButton">Get Pre-Approved</a>
                             </div>
-                            <div class="toolResultsRabaRow">
-                                <div class="brBorderTop"><p class="rabaPlaceholder"><a href="/ca/mortgages/mortgage-advisor.html" target="_blank">Request a Call or Appointment</a></p>
+                            <div class="chartRow">
+                                <div class="chartLink">
+                                    <p><a href="#" target="_blank">Request a Call or Appointment</a></p>
                                 </div>
                             </div>
                             <div id="additionalLinks">
                                 <div>
-                                    <h5>Try our other tools</h5>
+                                    <h4>Try our other tools</h4>
                                 </div>
                                 <div>
-                                    <a style="font-size:12px;" href="/ca/mortgages/calculator/mortgage-affordability.html?int_id=MPCTool_001_D_E">Mortgage Affordability Calculator</a>
-                                    <a style="font-size:12px;" href="/ca/mortgages/calculator/rent-vs-own.html?int_id=MPCTool_002_D_E">Rent vs. Own Calculator</a>
+                                    <a href="#">Mortgage Affordability Calculator</a>
+                                    <a href="#">Rent vs. Own Calculator</a>
                                 </div>
                             </div>
                         </div>
