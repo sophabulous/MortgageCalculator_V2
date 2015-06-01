@@ -6,12 +6,20 @@
 
 /*Page Setup*/
 .leftPane{
+/*
     width:350px; 
     float:left;
+*/
     margin-bottom: 15px;
     padding-right: 20px;
 }
 
+@media screen and (min-width: 992px) {
+    .leftPane {
+		width:350px; 
+    	float:left;
+	}
+}
 .rightPane{
 /*    width: 70%;*/
 /*    overflow: hidden;*/
@@ -173,7 +181,7 @@ a.primaryButton:hover{
     display:inline-block;
 }
 .helpButton{
-    background: url("help.svg");
+    background: url("../../help.svg");
     width:20px; 
     height:20px;
     border:none;

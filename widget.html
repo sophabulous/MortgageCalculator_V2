@@ -1,312 +1,347 @@
 <!DOCTYPE html>
-<html>
-<head>
-	<title>Morgage Calculator Mockup</title>
+<html ng-app="calculator">
+    <head>
+        <title>Morgage Calculator Mockup</title>
 
-    <link rel="stylesheet" href="bootstrap/css/bootstrap.css" media="all" />
-    <link rel="stylesheet" href="style.css" type="text/css">
-    <link rel="stylesheet" href="http://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-    <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1/jquery-ui.min.js"></script>
-    <script src="bootstrap/js/chart.js"></script>
-    <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
-    <script src="http://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
-    <script src="bootstrap/js/bootstrap.min.js"></script>
-    <script>
-      $(function() {
-        $( ".slider" ).slider({
-            animate: true,
+        <link rel="stylesheet" href="bootstrap/css/bootstrap.css" media="all" />
+        <link rel="stylesheet" href="bootstrap/css/style.css" type="text/css">
+        <link rel="stylesheet" href="http://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+        <link rel="stylesheet" href="bootstrap/css/rzslider.css" />
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+        <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1/jquery-ui.min.js"></script>
+        <script src="bootstrap/js/chart.js"></script>
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+        <script src="bootstrap/js/bootstrap.min.js"></script>
+<!--
+        <script>
+          $(function() {
+            $( ".slider" ).slider({
+                animate: true,
 
-          range: "max",
-          min: 1,
-          max: 1000000000,
-          value: 2,
-          slide: function( event, ui ) {
-            $( "#inputMortgageAmount" ).val( ui.value );
-          }
-        });
-        $( "#inputMortgageAmount" ).val( $( ".slider" ).slider( "value" ) );
-      });
-    </script>
-    <script type="text/javascript">
-        $(document).ready(function(){ 
-            $("#myTab a").click(function(e){
-                e.preventDefault();
-                $(this).tab('show');
+              range: "max",
+              min: 1,
+              max: 1000000000,
+              value: 2,
+              slide: function( event, ui ) {
+                $( "#inputMortgageAmount" ).val( ui.value );
+              }
             });
-        });
-    </script>
-    <script type="text/javascript">
-    jQuery(document).ready(function($) {
-        $('.popover-link').each(function() {
-            $(this).popover({
-                html: true,
-                trigger: 'manual'
-            }).click(function(e) {
-                $(this).popover('toggle');
-                $('.close').remove();
-                $('.popover-title').append('<button type="button" class="close">&times;</button>');
-                $('.close').click(function(e){
-                    $(this).parents('.popover').remove();
+            $( "#inputMortgageAmount" ).val( $( ".slider" ).slider( "value" ) );
+          });
+        </script>
+-->
+        <script type="text/javascript">
+            $(document).ready(function(){ 
+                $("#myTab a").click(function(e){
+                    e.preventDefault();
+                    $(this).tab('show');
                 });
             });
-        }); 
-    })
-</script>
-</head>
+        </script>
+        <script type="text/javascript">
+            jQuery(document).ready(function($) {
+                $('.popover-link').each(function() {
+                    $(this).popover({
+                        html: true,
+                        trigger: 'manual'
+                    }).click(function(e) {
+                        $(this).popover('toggle');
+                        $('.close').remove();
+                        $('.popover-title').append('<button type="button" class="close">&times;</button>');
+                        $('.close').click(function(e){
+                            $(this).parents('.popover').remove();
+                        });
+                    });
+                }); 
+            })
+        </script>
+        <script type="text/javascript">
+             $(document).ready(function () {
+                 $("#inputMortgageAmount").forceNumeric();
+                 $("#interestRate").forceNumeric();
+             });
 
-<body class="container">
-    <div class="row">
-        <div class="leftPane col-sm-4 ">
-            <h2>Mortgage Information</h2>
-            <div class="form-row">
-                <div class="leftCol">
-                    <label class="inputLabel" for="amount" >Mortgage Amount</label>
+
+             // forceNumeric() plug-in implementation
+             jQuery.fn.forceNumeric = function () {
+
+                 return this.each(function () {
+                     $(this).keydown(function (e) {
+                         var key = e.which || e.keyCode;
+
+                         if (!e.shiftKey && !e.altKey && !e.ctrlKey &&
+                         // numbers   
+                             key >= 48 && key <= 57 ||
+                         // Numeric keypad
+                             key >= 96 && key <= 105 ||
+                         // comma, period and minus, . on keypad
+                            key == 190 || key == 188 || key == 109 || key == 110 ||
+                         // Backspace and Tab and Enter
+                            key == 8 || key == 9 || key == 13 ||
+                         // Home and End
+                            key == 35 || key == 36 ||
+                         // left and right arrows
+                            key == 37 || key == 39 ||
+                         // Del and Ins
+                            key == 46 || key == 45)
+                             return true;
+
+                         return false;
+                     });
+                 });
+             }
+         </script>
+         <script>
+          function handleChange(input) {
+            if (input.value < 0) input.value = 0;
+            if (input.value > 1000000) input.value = 1000000;
+          }
+        </script>
+
+    </head>
+
+    <body class="container" ng-controller="calcController as calc">
+        <div class="row">
+            <div class="leftPane col-sm-4 ">
+                <h2>Mortgage Information</h2>
+                <div class="form-row">
+                    <div class="leftCol">
+                        <label class="inputLabel" for="amount" >Mortgage Amount</label>
+                    </div>
+                    <div class="rightCol">
+                        <input type="number" id="inputMortgageAmount" onchange="handleChange(this);" class="brinput" ng-model='mortgageAmount'>
+                    </div>
+<!--                    <div class="slider"></div>-->
+<!--                    To show top label in slider, go to rzslider.css and change rz-bubble transparency back to normal-->
+                    <rzslider
+                        rz-slider-floor="0"
+                        rz-slider-ceil="1000000"
+                        rz-slider-model="priceSlider"
+                        rz-slider-hide-limit-labels="true"
+                        rz-slider-always-show-bar="true"></rzslider>
+                    
+                    <span class="chartLegend">$0</span>
+                    <span class="chartLegend xAxis">$1,000,000</span>
                 </div>
-                <div class="rightCol">
-                    <input type="number" id="inputMortgageAmount" class="brinput">
-                </div>
-                <div class="slider"></div>
-                <span class="chartLegend">$0</span>
-                <span class="chartLegend xAxis">$1,000,000</span>
-            </div>
-            
-            <div class="form-row">
-                <div class="leftCol">
-                    <label class="inputLabel" for="" >Term and Type</label>
-                    <a class="popover-link" rel='popover' data-placement='right' data-original-title='&lt;b&gt;Mortgage Term&lt;/b&gt;' data-content='&lt;p&gt;The period of time your mortgage agreement with the lender is in effect. A mortgage term is usually between 6 months and 5 years long.&lt;/p&gt;&lt;p&gt;Not to be confused with the amortization period. For example, a mortgage could have a term of 5 years and an amortization period of 25 years.&lt;/p&gt;'><input type="button" value="" title="Help" name="helpMPTermAndType" id="helpMPTermAndType" class="helpButton"></a>
-                </div>
-                <div class="rightCol">
-                    <span>
-                         
-                        <select class="brselect" autocomplete="off">
-                            <option value="1">1 year fixed closed</option>
-                            <option value="2">2 year fixed closed</option>
-                            <option value="3">3 year fixed closed</option>
-                            <option value="4">4 year fixed closed</option>
-                            <option value="5">5 year fixed closed</option>
-                            <option value="6">7 year fixed closed</option>
-                            <option value="7">10 year fixed closed</option>
-                            <option value="8">5 year variable closed</option>
-                        </select>
-                    </span>
-                </div>
-            </div>
-            <div class="form-row">
-                <div class="leftCol">
-                    <div class="form-row">
-                        <label class="inputLabel" for="" >Interest Rate</label>
-                        <br /><a href="#">Check Rates</a>
+
+                <div class="form-row">
+                    <div class="leftCol">
+                        <label class="inputLabel" for="" >Term and Type</label>
+                        <a class="popover-link" rel='popover' data-placement='right' data-original-title='&lt;b&gt;Mortgage Term&lt;/b&gt;' data-content='&lt;p&gt;The period of time your mortgage agreement with the lender is in effect. A mortgage term is usually between 6 months and 5 years long.&lt;/p&gt;&lt;p&gt;Not to be confused with the amortization period. For example, a mortgage could have a term of 5 years and an amortization period of 25 years.&lt;/p&gt;'><input type="button" value="" title="Help" name="helpMPTermAndType" id="helpMPTermAndType" class="helpButton"></a>
+                    </div>
+                    <div class="rightCol">
+                        <span>
+                            <select class="brselect" autocomplete="off" ng-init="termNType = termNTypeOptions[0]" ng-model="termNType" ng-options="option.label for option in termNTypeOptions">
+                            </select>
+                        </span>
                     </div>
                 </div>
-                <div class="rightCol">
-                    <span >
-                        <input type="number" autocomplete="off" name="" id="" class="brinput">
-                    </span>
+                <div class="form-row">
+                    <div class="leftCol">
+                        <div class="form-row">
+                            <label class="inputLabel" for="" >Interest Rate</label>
+                            <br /><a href="#">Check Rates</a>
+                        </div>
+                    </div>
+                    <div class="rightCol">
+                        <span >
+                            <input type="number" autocomplete="off" name="" id="interestRate" class="brinput" ng-model="interestRate">
+                        </span>
+                    </div>
                 </div>
-            </div>
-            <div class="form-row">
-                <div class="leftCol">
-                    <label class="inputLabel" for="" >Amortization</label>                    
-                    <a class="popover-link" rel='popover' data-placement='right' data-original-title='&lt;b&gt;Mortgage Amortization&lt;/b&gt;' data-content='&lt;p&gt;The period of time it will take to pay off the principal amount of a mortgage. This should not be confused with the term of the mortgage, which is usually shorter. The maximum amortization period for an insured mortgage is 25 years, and the maximum amortization for an uninsured mortgage can be as long as 30 years.&lt;/p&gt;'><input type="button" value="" title="Help" name="helpMPTermAndType" id="helpMPTermAndType" class="helpButton"></a>
+                <div class="form-row">
+                    <div class="leftCol">
+                        <label class="inputLabel" for="" >Amortization</label>                    
+                        <a class="popover-link" rel='popover' data-placement='right' data-original-title='&lt;b&gt;Mortgage Amortization&lt;/b&gt;' data-content='&lt;p&gt;The period of time it will take to pay off the principal amount of a mortgage. This should not be confused with the term of the mortgage, which is usually shorter. The maximum amortization period for an insured mortgage is 25 years, and the maximum amortization for an uninsured mortgage can be as long as 30 years.&lt;/p&gt;'><input type="button" value="" title="Help" name="helpMPTermAndType" id="helpMPTermAndType" class="helpButton"></a>
+                    </div>
+                    <div class="rightCol">
+                        <span >
+                            <select class="brselect" autocomplete="off" ng-init="amortYears = amortOptions[0]" ng-model="amortYears" type="number" ng-options="option.label for option in amortOptions">
+                            </select>
+                        </span>
+                    </div>
                 </div>
-                <div class="rightCol">
-                    <span>
-                         
-                        <select class="brselect" autocomplete="off">
-                            <option value="1">5 years</option>
-                            <option value="2">10 years</option>
-                            <option value="3">15 years</option>
-                            <option value="4">20 years</option>
-                            <option value="5">25 years</option>
-                            <option value="6">30 years</option>
-                        </select>
-                    </span>
+                <div class="form-row">
+                    <div class="leftCol">
+                        <label class="inputLabel" for="" >Payment Frequency</label>
+                    </div>
+                    <div class="rightCol">
+                        <span>
+                            <select class="brselect" autocomplete="off" ng-init="paymentFrequency = paymentOptions[0]" ng-model="paymentFrequency" ng-options="option.label for option in paymentOptions">
+                            </select>
+                        </span>
+                    </div>
                 </div>
-            </div>
-            <div class="form-row">
-                <div class="leftCol">
-                    <label class="inputLabel" for="" >Payment Frequency</label>
+                <div class="form-row">
+                    <div class="brHorLine"></div>
+                    <h2>Extra Payments</h2>
                 </div>
-                <div class="rightCol">
-                    <span>
-                         
-                        <select class="brselect" autocomplete="off" >
-                            <option value="1">Monthly</option>
-                            <option value="2">Semi-Monthly</option>
-                            <option value="3">Bi-Weekly</option>
-                            <option value="4">Weekly</option>
-                            <option value="5">Accelerated Bi-Weekly</option>
-                            <option value="6">Accelerated Weekly</option>
-                        </select>
-                    </span>
+
+                <div class="form-row">
+                    <div class="leftCol">
+                        <label class="inputLabel" for="" >One-Time Prepayment</label>
+                    </div>
+                    <div class="rightCol">
+                        <span>
+
+                            <input type="number" autocomplete="off" class="brinput">
+                        </span>
+                    </div>
                 </div>
-            </div>
-            <div class="form-row">
-                <div class="brHorLine"></div>
-                <h2>Extra Payments</h2>
+                <div class="form-row">
+                    <div class="leftCol">
+                        <label class="inputLabel" for="" >Annual Prepayment</label>
+                    </div>
+                    <div class="rightCol">
+                        <span>
+
+                            <input type="number" autocomplete="off" class="brinput">
+                        </span>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="leftCol">
+                        <label class="inputLabel" for="" >Increase Payment By</label>
+                    </div>
+                    <div class="rightCol">
+                        <span>
+
+                            <input type="number" autocomplete="off" class="brinput">
+                        </span>
+                    </div>
+                </div>
             </div>
 
-            <div class="form-row">
-                <div class="leftCol">
-                    <label class="inputLabel" for="" >One-Time Prepayment</label>
-                </div>
-                <div class="rightCol">
-                    <span>
-                         
-                        <input type="number" autocomplete="off" class="brinput">
-                    </span>
-                </div>
-            </div>
-            <div class="form-row">
-                <div class="leftCol">
-                    <label class="inputLabel" for="" >Annual Prepayment</label>
-                </div>
-                <div class="rightCol">
-                    <span>
-                         
-                        <input type="number" autocomplete="off" class="brinput">
-                    </span>
-                </div>
-            </div>
-            <div class="form-row">
-                <div class="leftCol">
-                    <label class="inputLabel" for="" >Increase Payment By</label>
-                </div>
-                <div class="rightCol">
-                    <span>
-                         
-                        <input type="number" autocomplete="off" class="brinput">
-                    </span>
-                </div>
-            </div>
-        </div>
-        
-        <div class="rightPane col-sm-8 ">
-            <div>
-                <div id="resultsHeader">
-                    <h2>Your <span></span> mortgage payment <br> is <span id="resultsHeaderPayment"></span>.</h2>
-                </div>
-                <div class="">
-                    <ul class="nav nav-tabs" id="myTab">
-                        <li class="active"><a href="#sectionA">Mortgage Payment Options</a></li>
-                        <li ><a href="#sectionB">Mortgage Term Summary</a></li>
-                    </ul>
+            <div class="rightPane col-sm-8 ">
+                <div>
+                    <div id="resultsHeader">
+                        <h2>Your <span></span> mortgage payment <br> is <span id="resultsHeaderPayment"></span>.</h2>
+                    </div>
+                    <div class="">
+                        <ul class="nav nav-tabs" id="myTab">
+                            <li class="active"><a href="#sectionA">Mortgage Payment Options</a></li>
+                            <li ><a href="#sectionB">Mortgage Term Summary</a></li>
+                        </ul>
 
-                    <div class="tab-content">
-                        <div id="sectionA" class="tab-pane fade in active">
-                            <div>
-                                <h3>Amortization Schedule</h3>
+                        <div class="tab-content">
+                            <div id="sectionA" class="tab-pane fade in active">
                                 <div>
-                                    <div class="chartLegend">
-                                        Mortgage<br>Amount
+                                    <h3>Amortization Schedule</h3>
+                                    <div>
+                                        <div class="chartLegend">
+                                            Mortgage<br>Amount
+                                        </div>
+
+                                        <canvas id="canvas" ></canvas>
+                                        <script>
+                                            var randomScalingFactor = function(){ return Math.round(Math.random()*100)};
+
+                                            var barChartData = {
+                                                labels : ["1","5","10","15","20","25"],
+                                                datasets : [
+                                                    {
+                                                        fillColor : "rgba(221,250,55,0.7)",
+                                                        strokeColor : "rgba(220,220,220,0.8)",
+                                                        highlightFill: "rgba(220,220,220,0.75)",
+                                                        highlightStroke: "rgba(220,220,220,1)",
+                                                        data : [randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor()]
+                                                    },
+                                                    {
+                                                        fillColor : "rgba(252,0,0,0.7)",
+                                                        strokeColor : "rgba(151,187,205,0.8)",
+                                                        highlightFill : "rgba(151,187,205,0.75)",
+                                                        highlightStroke : "rgba(151,187,205,1)",
+                                                        data : [randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor()]
+                                                    }
+                                                ]
+
+                                            }
+                                            window.onload = function(){
+                                                var ctx = document.getElementById("canvas").getContext("2d");
+                                                window.myBar = new Chart(ctx).Bar(barChartData, {
+                                                    responsive : true
+                                                });
+                                            }
+
+                                        </script>
                                     </div>
-
-                                    <canvas id="canvas" ></canvas>
-                                    <script>
-                                        var randomScalingFactor = function(){ return Math.round(Math.random()*100)};
-
-                                        var barChartData = {
-                                            labels : ["1","5","10","15","20","25"],
-                                            datasets : [
-                                                {
-                                                    fillColor : "rgba(221,250,55,0.7)",
-                                                    strokeColor : "rgba(220,220,220,0.8)",
-                                                    highlightFill: "rgba(220,220,220,0.75)",
-                                                    highlightStroke: "rgba(220,220,220,1)",
-                                                    data : [randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor()]
-                                                },
-                                                {
-                                                    fillColor : "rgba(252,0,0,0.7)",
-                                                    strokeColor : "rgba(151,187,205,0.8)",
-                                                    highlightFill : "rgba(151,187,205,0.75)",
-                                                    highlightStroke : "rgba(151,187,205,1)",
-                                                    data : [randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor()]
-                                                }
-                                            ]
-
-                                        }
-                                        window.onload = function(){
-                                            var ctx = document.getElementById("canvas").getContext("2d");
-                                            window.myBar = new Chart(ctx).Bar(barChartData, {
-                                                responsive : true
-                                            });
-                                        }
-
-                                    </script>
+                                    <div>
+                                        <span class="chartLegend xAxis">Amortization in Years</span>
+                                        <span class="chartLegend"><span id="chartLegendMonthlyIcon"></span><span id="chartLegendMonthly">Monthly</span></span>
+                                        <span class="chartLegend"><span id="chartLegendExtraIcon"> </span><span id="chartLegendExtra"> Extra</span></span>
+                                    </div>
+                                    <p id="saveMessage">
+                                        See how much you can save by making extra payments
+                                    </p>
+                                    <p id="extraMessage">Your extra payments saved you <span id="resultsExtraSavedAmount"></span> off your mortgage and <span id="resultsExtraSavedYears"></span> years off your amortization.
+                                    </p>
+                                    <div class="chartLink">
+                                        <a href="javascript:void(0);">View the Payment Frequency Table</a>
+                                    </div>
                                 </div>
-                                <div>
-                                    <span class="chartLegend xAxis">Amortization in Years</span>
-                                    <span class="chartLegend"><span id="chartLegendMonthlyIcon"></span><span id="chartLegendMonthly">Monthly</span></span>
-                                    <span class="chartLegend"><span id="chartLegendExtraIcon"> </span><span id="chartLegendExtra"> Extra</span></span>
-                                </div>
-                                <p id="saveMessage">
-                                    See how much you can save by making extra payments
-                                </p>
-                                <p id="extraMessage">Your extra payments saved you <span id="resultsExtraSavedAmount"></span> off your mortgage and <span id="resultsExtraSavedYears"></span> years off your amortization.
-					            </p>
-                                <div class="chartLink">
-                                    <a href="javascript:void(0);">View the Payment Frequency Table</a>
+
+                            </div>
+                            <div id="sectionB" class="tab-pane fade">
+                                <div id="tableBlock">
+                                    <table class="table table-bordered table-responsive resultTable">
+                                        <thead>
+                                            <tr>
+                                                <th>Payment and Term Details</th>
+                                                <th>Results Summary</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>Principal Paid for Term</td>
+                                                <td>{{ calcPP() | number : 2 | currency}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Interest Paid for Term</td>
+                                                <td>{{ calcIP() | number : 2 | currency}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Principal and Interest Paid for Term</td>
+                                                <td>{{ calcPandI() | number : 2 | currency}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Balance at the End of Term</td>
+                                                <td>{{ calcBalance() | number : 2 | currency}}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
                                 </div>
                             </div>
 
-                        </div>
-                        <div id="sectionB" class="tab-pane fade">
-                            <div id="tableBlock">
-                                <table class="table table-bordered table-responsive resultTable">
-                                    <thead>
-                                        <tr>
-                                            <th>Payment and Term Details</th>
-                                            <th>Results Summary</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>Principal Paid for Term</td>
-                                            <td></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Interest Paid for Term</td>
-                                            <td></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Principal and Interest Paid for Term</td>
-                                            <td></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Balance at the End of Term</td>
-                                            <td></td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                        
-                        <div>
-                            <div class="chartRow">
-                                <a href="#" class="primaryButton">Get Pre-Approved</a>
-                            </div>
-                            <div class="chartRow">
-                                <div class="chartLink">
-                                    <p><a href="#" target="_blank">Request a Call or Appointment</a></p>
+                            <div>
+                                <div class="chartRow">
+                                    <a href="#" class="primaryButton">Get Pre-Approved</a>
                                 </div>
-                            </div>
-                            <div id="additionalLinks">
-                                <div>
-                                    <h4>Try our other tools</h4>
+                                <div class="chartRow">
+                                    <div class="chartLink">
+                                        <p><a href="#" target="_blank">Request a Call or Appointment</a></p>
+                                    </div>
                                 </div>
-                                <div>
-                                    <a href="#">Mortgage Affordability Calculator</a>
-                                    <a href="#">Rent vs. Own Calculator</a>
+                                <div id="additionalLinks">
+                                    <div>
+                                        <h4>Try our other tools</h4>
+                                    </div>
+                                    <div>
+                                        <a href="#">Mortgage Affordability Calculator</a>
+                                        <a href="#">Rent vs. Own Calculator</a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-              </div>
+                  </div>
+                </div>
             </div>
-        </div>
-        
-    </div>
 
-</body>
+        </div>
+        <script src="bootstrap/js/angular.min.js"></script>
+        <script src="bootstrap/js/rzslider.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.13.0/ui-bootstrap-tpls.js"></script>
+        <script src="bootstrap/js/calculator.js"></script>
+
+    </body>
 </html>
